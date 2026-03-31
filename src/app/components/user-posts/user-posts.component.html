@@ -1,0 +1,60 @@
+<div class="card border-0 shadow-sm posts-card">
+  <div class="card-body p-4">
+    <div
+      class="d-flex align-items-center justify-content-between mb-4 flex-column flex-sm-row gap-3"
+    >
+      <div>
+        <h2 class="h5 mb-1">Publicaciones</h2>
+        <p class="text-secondary mb-0">Explora el feed del usuario.</p>
+      </div>
+      <span
+        class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary px-3 py-2"
+        >{{ postsWithComments.length }} posts</span
+      >
+    </div>
+
+    <div *ngIf="postsWithComments.length === 0" class="alert alert-secondary">
+      Este usuario no tiene posts para mostrar.
+    </div>
+
+    <div *ngFor="let item of postsWithComments" class="card mb-3 post-card">
+      <div class="card-body p-4">
+        <div class="mb-3">
+          <h5 class="mb-2 text-dark">{{ item.post.title }}</h5>
+          <p class="text-secondary mb-0">{{ item.post.body }}</p>
+        </div>
+
+        <div
+          class="d-flex flex-wrap gap-2 align-items-center mb-3 reaction-row"
+        >
+          <span class="badge rounded-pill reaction-badge-like">
+            <i class="bi bi-hand-thumbs-up-fill me-1"></i>
+            {{ item.post.reactions.likes || 0 }}
+          </span>
+          <span class="badge rounded-pill reaction-badge-dislike">
+            <i class="bi bi-hand-thumbs-down-fill me-1"></i>
+            {{ item.post.reactions.dislikes || 0 }}
+          </span>
+        </div>
+
+        <div
+          *ngIf="item.comments.length === 0"
+          class="text-secondary small mb-2"
+        >
+          No hay comentarios.
+        </div>
+
+        <ul class="list-unstyled mb-0" *ngIf="item.comments.length > 0">
+          <li *ngFor="let comment of item.comments" class="comment-item mb-3">
+            <div class="comment-box p-3 rounded-4">
+              <div class="fw-semibold mb-1">
+                {{ comment.user.fullName || comment.user.username }}
+              </div>
+              <div class="text-secondary small">{{ comment.body }}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

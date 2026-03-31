@@ -1,0 +1,65 @@
+.card {
+  border-radius: 1.5rem;
+}
+
+.page-card {
+  border: 1px solid #e8e3f7;
+}
+
+.search-bar {
+  border: 1px solid #e8e3f7;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar .form-control,
+.search-bar .btn,
+.search-bar .input-group-text {
+  border: none;
+}
+
+.search-bar .form-control {
+  min-height: 56px;
+  box-shadow: none;
+  color: #333;
+}
+
+.search-bar .form-control::placeholder {
+  color: #9da7b8;
+}
+
+.search-bar .btn {
+  min-height: 56px;
+  background: #8b7cf6;
+  border: none;
+}
+
+.search-bar .btn:hover,
+.search-bar .btn:focus {
+  background: #7a6ae8;
+}
+
+.search-bar .btn-search:disabled {
+  background: #b2a9f8;
+}
+
+.search-bar .input-group-text {
+  color: #8b7cf6;
+}
+
+.search-bar .form-control:focus,
+.search-bar .btn:focus,
+.search-bar .input-group-text:focus {
+  box-shadow: none;
+}
+
+@media (max-width: 575px) {
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .search-bar .btn {
+    width: 100%;
+  }
+}

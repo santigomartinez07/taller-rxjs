@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  min-height: 100%;
+  background: #f8f6ff;
+  color: #14171a;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+::selection {
+  background: rgba(139, 124, 246, 0.2);
+}
+
+.text-secondary,
+.text-muted {
+  color: #6c757d !important;
+}
+
+.bg-page {
+  background: #f8f6ff;
+}

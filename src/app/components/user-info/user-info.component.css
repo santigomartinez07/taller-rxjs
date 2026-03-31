@@ -1,0 +1,19 @@
+.profile-card {
+  border: 1px solid #e8e3f7;
+  background: #ffffff;
+}
+
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border: 3px solid #d7cfff;
+}
+
+.profile-card p {
+  margin-bottom: 0.35rem;
+}
+
+.profile-card small {
+  font-size: 0.72rem;
+}

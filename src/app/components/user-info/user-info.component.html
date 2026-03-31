@@ -1,0 +1,28 @@
+<div class="card border-0 shadow-sm mb-4 profile-card">
+  <div class="card-body p-4">
+    <div class="d-flex align-items-center gap-3 mb-3">
+      <img
+        [src]="user.image"
+        [alt]="user.username"
+        class="rounded-circle profile-avatar"
+      />
+      <div>
+        <h2 class="h5 mb-1 text-dark">
+          {{ user.firstName }} {{ user.lastName }}
+        </h2>
+        <p class="text-secondary mb-1">&#64;{{ user.username }}</p>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-sm-6">
+        <small class="text-uppercase text-secondary">Email</small>
+        <p class="mb-0 fw-semibold">{{ user.email }}</p>
+      </div>
+      <div class="col-sm-6">
+        <small class="text-uppercase text-secondary">Estado</small>
+        <p class="mb-0 text-muted">Usuario activo</p>
+      </div>
+    </div>
+  </div>
+</div>

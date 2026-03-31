@@ -1,0 +1,39 @@
+.posts-card {
+  border: 1px solid #e8e3f7;
+  background: #ffffff;
+}
+
+.post-card {
+  border: 1px solid #f0ecfb;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(116, 97, 178, 0.08);
+}
+
+.reaction-row {
+  gap: 0.75rem;
+}
+
+.reaction-badge-like {
+  background: #e8f3ff;
+  color: #3e6ef5;
+  border: 1px solid #d0e1ff;
+}
+
+.reaction-badge-dislike {
+  background: #ffe6ed;
+  color: #ba5065;
+  border: 1px solid #ffd5dd;
+}
+
+.comment-box {
+  background: #eef4ff;
+  border: 1px solid #e8e3f7;
+}
+
+.comment-item:last-child {
+  margin-bottom: 0;
+}
+
+.comment-box div {
+  margin-bottom: 0;
+}
