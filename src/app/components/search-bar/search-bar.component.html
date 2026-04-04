@@ -1,0 +1,24 @@
+<form (ngSubmit)="onSubmit(searchForm)" #searchForm="ngForm">
+  <div
+    class="input-group input-group-lg search-bar rounded-pill overflow-hidden shadow-sm"
+  >
+    <span class="input-group-text bg-white border-0 ps-3 text-secondary">
+      <i class="bi bi-search"></i>
+    </span>
+    <input
+      type="text"
+      class="form-control border-0 bg-white"
+      placeholder="Buscar username"
+      name="username"
+      [(ngModel)]="username"
+      required
+    />
+    <button
+      class="btn btn-primary btn-search rounded-pill px-4"
+      type="submit"
+      [disabled]="searchForm.invalid"
+    >
+      <i class="bi bi-search me-2"></i>Buscar
+    </button>
+  </div>
+</form>
