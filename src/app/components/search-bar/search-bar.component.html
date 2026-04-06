@@ -1,24 +1,49 @@
-<form (ngSubmit)="onSubmit(searchForm)" #searchForm="ngForm">
-  <div
-    class="input-group input-group-lg search-bar rounded-pill overflow-hidden shadow-sm"
-  >
-    <span class="input-group-text bg-white border-0 ps-3 text-secondary">
-      <i class="bi bi-search"></i>
-    </span>
-    <input
-      type="text"
-      class="form-control border-0 bg-white"
-      placeholder="Buscar username"
-      name="username"
-      [(ngModel)]="username"
-      required
-    />
-    <button
-      class="btn btn-primary btn-search rounded-pill px-4"
-      type="submit"
-      [disabled]="searchForm.invalid"
-    >
-      <i class="bi bi-search me-2"></i>Buscar
-    </button>
+<div class="card border-0 rounded-4 shadow-sm mb-4 bg-white page-card">
+  <div class="card-body p-4 text-center">
+    <h1 class="h3 fw-semibold mb-2">Buscar usuario</h1>
+    <p class="text-secondary mb-0">
+      Ingresa el username para ver perfil, publicaciones y comentarios.
+    </p>
   </div>
-</form>
+
+  <div class="card-body p-4 pt-0">
+    <form (ngSubmit)="onSubmit(searchForm)" #searchForm="ngForm">
+      <div
+        class="input-group input-group-lg search-bar rounded-pill overflow-hidden shadow-sm gap-1"
+      >
+        <span class="input-group-text bg-white border-0 ps-3 text-secondary">
+          <i class="bi bi-search"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control border-0 bg-white"
+          placeholder="Buscar username"
+          name="username"
+          [(ngModel)]="username"
+          required
+        />
+        <button
+          class="btn btn-primary btn-search rounded-pill px-4"
+          type="submit"
+          [disabled]="searchForm.invalid"
+        >
+          <i class="bi bi-search me-2"></i>Buscar
+        </button>
+      </div>
+    </form>
+
+    @if (errorMessage) {
+      <div class="alert alert-danger mt-3 mb-0 d-flex align-items-center gap-2">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
+    }
+
+    @if (loading) {
+      <div class="alert alert-info mt-3 mb-0 d-flex align-items-center gap-2">
+        <i class="bi bi-hourglass-split"></i>
+        <span>Cargando información...</span>
+      </div>
+    }
+  </div>
+</div>

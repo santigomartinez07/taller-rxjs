@@ -2,40 +2,16 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-7 col-lg-8">
-        <div class="card border-0 rounded-4 shadow-sm mb-4 bg-white page-card">
-          <div class="card-body p-4 text-center">
-            <h1 class="h3 fw-semibold mb-2">Buscar usuario</h1>
-            <p class="text-secondary mb-0">
-              Ingresa el username para ver perfil, publicaciones y comentarios.
-            </p>
-          </div>
-
-          <div class="card-body p-4 pt-0">
-            <app-search-bar (search)="onSearch($event)"></app-search-bar>
-
-            @if (errorMessage) {
-              <div
-                class="alert alert-danger mt-3 mb-0 d-flex align-items-center gap-2"
-              >
-                <i class="bi bi-exclamation-circle-fill"></i>
-                <span>{{ errorMessage }}</span>
-              </div>
-            }
-
-            @if (loading) {
-              <div
-                class="alert alert-info mt-3 mb-0 d-flex align-items-center gap-2"
-              >
-                <i class="bi bi-hourglass-split"></i>
-                <span>Cargando información...</span>
-              </div>
-            }
-          </div>
-        </div>
+        <app-search-bar
+          [errorMessage]="errorMessage"
+          [loading]="loading"
+          (search)="onSearch($event)"
+        ></app-search-bar>
 
         @if (userFound) {
           <app-user-info [user]="userFound"></app-user-info>
         }
+
         @if (userFound) {
           <app-user-posts
             [postsWithComments]="postsWithComments"
