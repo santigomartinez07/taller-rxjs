@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { User } from './interfaces/user';
 import { PostWithComments } from './interfaces/post-with-comments';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { ClientService } from './service/client.service';
 
 @Component({
   selector: 'app-root',
@@ -16,19 +16,20 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     FormsModule,
     UserInfoComponent,
     UserPostsComponent,
-    SearchBarComponent,
+    SearchBarComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
+
   username: string = '';
   userFound: User | null = null;
   postsWithComments: PostWithComments[] = [];
   errorMessage: string = '';
   loading: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private client: ClientService) {}
 
   onSearch(username: string): void {
     this.username = username;
@@ -54,49 +55,49 @@ export class AppComponent {
   }
 
   private loadUser(): void {
-    this.http
-      .get<any>(
-        `https://dummyjson.com/users/filter?key=username&value=${this.username}`,
-      )
-      .subscribe({
-        next: (response: any) => {
-          if (!response?.users || response.users.length === 0) {
-            this.errorMessage = 'Usuario no encontrado';
+    this.client
+        .getUrlUsuario(this.username)
+        .subscribe({
+          next: (response: any) => {
+            if (!response?.users || response.users.length === 0) {
+              this.errorMessage = 'Usuario no encontrado';
+              this.loading = false;
+              return;
+            }
+
+            const user = response.users[0];
+            this.userFound = user;
+            this.loadPosts(user.id);
+          },
+          error: () => {
+            this.errorMessage = 'Error al buscar el usuario';
+            this.loading = false;
+          },
+        });
+  }
+
+  private loadPosts(userId: number): void {
+    this.client
+        .getUrlPostsByUserId(userId)
+        .subscribe({
+          next: (postResponse: any) => {
+          const posts = postResponse?.posts || [];
+
+          if (posts.length === 0) {
+            this.postsWithComments = [];
             this.loading = false;
             return;
           }
 
-          const user = response.users[0];
-          this.userFound = user;
-          this.loadPosts(user.id);
-        },
-        error: () => {
-          this.errorMessage = 'Error al buscar el usuario';
-          this.loading = false;
-        },
-      });
-  }
+          let loadedPosts = 0;
 
-  private loadPosts(userId: number): void {
-    this.http.get<any>(`https://dummyjson.com/posts/user/${userId}`).subscribe({
-      next: (postResponse: any) => {
-        const posts = postResponse?.posts || [];
-
-        if (posts.length === 0) {
-          this.postsWithComments = [];
-          this.loading = false;
-          return;
-        }
-
-        let loadedPosts = 0;
-
-        posts.forEach((post: any) => {
-          this.loadCommentsForPost(post, () => {
-            loadedPosts++;
-            if (loadedPosts === posts.length) {
-              this.loading = false;
-            }
-          });
+          posts.forEach((post: any) => {
+            this.loadCommentsForPost(post, () => {
+              loadedPosts++;
+              if (loadedPosts === posts.length) {
+                this.loading = false;
+              }
+            });
         });
       },
       error: () => {
@@ -107,23 +108,23 @@ export class AppComponent {
   }
 
   private loadCommentsForPost(post: any, callback: () => void): void {
-    this.http
-      .get<any>(`https://dummyjson.com/comments/post/${post.id}`)
-      .subscribe({
-        next: (commentResponse: any) => {
-          this.postsWithComments.push({
-            post: post,
-            comments: commentResponse?.comments || [],
-          });
-          callback();
-        },
-        error: () => {
-          this.postsWithComments.push({
-            post: post,
-            comments: [],
-          });
-          callback();
-        },
-      });
+    this.client
+        .getUrlCommentsByPostId(post.id)
+        .subscribe({
+          next: (commentResponse: any) => {
+            this.postsWithComments.push({
+              post: post,
+              comments: commentResponse?.comments || [],
+            });
+            callback();
+          },
+          error: () => {
+            this.postsWithComments.push({
+              post: post,
+              comments: [],
+            });
+            callback();
+          },
+        });
   }
 }
